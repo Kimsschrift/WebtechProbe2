@@ -1,6 +1,11 @@
 <template>
   <div class="quote-wrapper">
-    <img alt="chuck-norris" src="../assets/chuck-norris.png" class="img" />
+    <img
+        alt="chuck-norris"
+        src="../assets/chuck-norris.png"
+        class="img"
+        @click="loadRandomQuote"
+    />
     <h1 class="quote">"{{ randomQuote }}"</h1>
   </div>
 </template>
@@ -13,6 +18,15 @@ const randomQuote = ref('Wenn alles funktioniert, steht hier ein Chuck Norris Sp
 
 function loadRandomQuote() {
   // TODO: Rufen Sie hier das Backend mittels axios.get(...).then(...).catch(...) auf
+  const index = getRandomInt(79);
+  axios.get(`api/v1/quotes?index=${index}`)
+      .then(response => {
+        randomQuote.value = response.data.quote;
+      })
+      .catch(error => {
+        console.error("Fehler beim Laden des Spruchs:", error)
+        randomQuote.value = "Hoppla, da ist Chuck Norris wohl ein Fehler unterlaufen."
+      })
 }
 
 function getRandomInt(maxExclusive) {
