@@ -11,7 +11,7 @@
 </template>
 
 <script setup>
-import {ref} from 'vue'
+import {ref, onMounted} from 'vue'
 import axios from 'axios'
 
 const randomQuote = ref('Wenn alles funktioniert, steht hier ein Chuck Norris Spruch.')
@@ -32,6 +32,10 @@ function loadRandomQuote() {
 function getRandomInt(maxExclusive) {
   return Math.floor(Math.random() * maxExclusive);
 }
+
+onMounted(() => {
+  loadRandomQuote();
+});
 </script>
 
 <style scoped>
